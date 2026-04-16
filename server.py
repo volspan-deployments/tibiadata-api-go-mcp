@@ -15,6 +15,7 @@ BASE_URL = "https://api.tibiadata.com/v4"
 @mcp.tool()
 async def get_character(name: str) -> dict:
     """Retrieve detailed information about a specific Tibia character, including their level, vocation, guild, achievements, and other profile data. Use this when the user asks about a Tibia player or character."""
+    _track("get_character")
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(f"{BASE_URL}/character/{name}")
         response.raise_for_status()
@@ -24,6 +25,7 @@ async def get_character(name: str) -> dict:
 @mcp.tool()
 async def get_guild(name: str) -> dict:
     """Retrieve information about a specific Tibia guild, including its members, description, founding date, and war history. Use this when the user asks about a Tibia guild."""
+    _track("get_guild")
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(f"{BASE_URL}/guild/{name}")
         response.raise_for_status()
@@ -33,6 +35,7 @@ async def get_guild(name: str) -> dict:
 @mcp.tool()
 async def get_world(name: str) -> dict:
     """Retrieve information about a specific Tibia game world/server, including online players, location, PvP type, and status. Use this when the user asks about a specific Tibia server or world."""
+    _track("get_world")
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(f"{BASE_URL}/world/{name}")
         response.raise_for_status()
@@ -42,6 +45,7 @@ async def get_world(name: str) -> dict:
 @mcp.tool()
 async def list_worlds() -> dict:
     """Retrieve a list of all Tibia game worlds/servers with their basic status information. Use this when the user wants to see all available Tibia servers or compare worlds."""
+    _track("list_worlds")
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(f"{BASE_URL}/worlds")
         response.raise_for_status()
@@ -50,6 +54,7 @@ async def list_worlds() -> dict:
 
 @mcp.tool()
 async def get_highscores(
+    _track("get_highscores")
     world: str,
     category: str,
     vocation: Optional[str] = "all",
@@ -66,6 +71,7 @@ async def get_highscores(
 @mcp.tool()
 async def get_creature(race: str) -> dict:
     """Retrieve detailed information about a specific Tibia creature/monster, including its loot, hit points, experience, and other stats. Use this when the user asks about a Tibia monster or creature."""
+    _track("get_creature")
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(f"{BASE_URL}/creature/{race}")
         response.raise_for_status()
@@ -75,6 +81,7 @@ async def get_creature(race: str) -> dict:
 @mcp.tool()
 async def get_spells(vocation: Optional[str] = "all") -> dict:
     """Retrieve information about Tibia spells, optionally filtered by vocation. Use this when the user asks about Tibia spells or magic abilities available to characters."""
+    _track("get_spells")
     async with httpx.AsyncClient(timeout=30.0) as client:
         if vocation and vocation != "all":
             url = f"{BASE_URL}/spells/{vocation}"
@@ -88,6 +95,7 @@ async def get_spells(vocation: Optional[str] = "all") -> dict:
 @mcp.tool()
 async def get_api_info() -> dict:
     """Retrieve metadata and health information about the TibiaData API itself, including version, build details, and readiness status. Use this to check if the API is operational or to get version information."""
+    _track("get_api_info")
     async with httpx.AsyncClient(timeout=30.0) as client:
         info_response = await client.get(f"{BASE_URL}/info")
         info_response.raise_for_status()
